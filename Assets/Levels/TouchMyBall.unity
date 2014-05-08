@@ -257,7 +257,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &260570708
 Renderer:
   m_ObjectHideFlags: 0
@@ -664,6 +664,66 @@ Transform:
   m_LocalScale: {x: .343429774, y: 2.50117159, z: .32863158}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!1 &1006797766
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1006797767}
+  - 114: {fileID: 1006797768}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1006797767
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1006797766}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &1006797768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1006797766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a772b06f7764ba34b8ec48de4fbc05fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Ball: {fileID: 1414931498}
+  WallGroups:
+  - Name: LeftRight
+    Group:
+    - {fileID: 260570707}
+    - {fileID: 1740684252}
+  - Name: TopBottom
+    Group:
+    - {fileID: 725920573}
+    - {fileID: 463696211}
+  - Name: Diagonal1
+    Group:
+    - {fileID: 1210949055}
+    - {fileID: 1736448583}
+    - {fileID: 363867547}
+    - {fileID: 1553705398}
+  - Name: Diagonal2
+    Group:
+    - {fileID: 1668986549}
+    - {fileID: 105565836}
+    - {fileID: 877453866}
+    - {fileID: 1978839071}
 --- !u!1 &1210949055
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,6 +953,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bea7fccbd2bbab140b230b3d4c6bcd5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DeltaCoefficient: .00999999978
+  VelocityDecayCoefficient: .949999988
 --- !u!54 &1414931499
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1181,7 +1243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!65 &1740684253
 BoxCollider:
   m_ObjectHideFlags: 0

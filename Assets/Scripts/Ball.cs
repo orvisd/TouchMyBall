@@ -3,30 +3,36 @@ using System.Collections;
 
 public class Ball : MonoBehaviour
 {
+    public float DeltaCoefficient = 0.01f;
+    public float VelocityDecayCoefficient = 0.95f;
+
     bool held;
     Vector3 lastMousePosition;
-    float DELTA_COEFFICIENT = 0.01f;
     Vector3 velocity;
-    float VELOCITY_DECAY = 0.95f;
 
-    // Use this for initialization
     void Start()
     {
         Input.simulateMouseWithTouches = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(held)
         {
-            Vector3 delta = Input.mousePosition - lastMousePosition;
-            velocity = delta * DELTA_COEFFICIENT;
-            lastMousePosition = Input.mousePosition;
+            if(isHoldable())
+            {
+                Vector3 delta = Input.mousePosition - lastMousePosition;
+                velocity = delta * DeltaCoefficient;
+                lastMousePosition = Input.mousePosition;
+            }
+            else
+            {
+                held = false;
+            }
         }
         else
         {
-            velocity *= VELOCITY_DECAY;
+            velocity *= VelocityDecayCoefficient;
         }
 
         if(transform.position.x < -5.5f)
@@ -38,19 +44,34 @@ public class Ball : MonoBehaviour
             transform.position = new Vector3(-5.5f, transform.position.y, transform.position.z);
         }
 
+        if(transform.position.y < -3)
+        {
+            transform.position = new Vector3(transform.position.x, 3, transform.position.z);
+        }
+        else if(transform.position.y > 3)
+        {
+            transform.position = new Vector3(transform.position.x, -3, transform.position.z);
+        }
+
+        if(Mathf.Approximately(velocity.x, 0) && Mathf.Approximately(velocity.y, 0))
+        {
+            Reset();
+        }
+
         transform.position += velocity;
     }
 
     void OnMouseDown()
     {
-        Debug.Log("WE HAVE A TOUCH");
-        held = true;
-        lastMousePosition = Input.mousePosition;
+        if(isHoldable())
+        {
+            held = true;
+            lastMousePosition = Input.mousePosition;
+        }
     }
 
     void OnMouseUp()
     {
-        Debug.Log("TOUCH RELEASED");
         held = false;
     }
 
@@ -58,8 +79,19 @@ public class Ball : MonoBehaviour
     {
         if(collision.gameObject.name.Contains("Border"))
         {
-            Debug.Log("WE HAVE A HIT");
-            velocity = Vector3.zero;
+            Reset();
         }
+    }
+
+    bool isHoldable()
+    {
+        return transform.position.x > -1 && transform.position.x < 1 &&
+               transform.position.y > -1 && transform.position.y < 1;
+    }
+
+    public void Reset()
+    {
+        velocity = Vector3.zero;
+        transform.position = Vector3.zero;
     }
 }
